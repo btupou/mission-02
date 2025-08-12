@@ -42,6 +42,7 @@ timerSecs.addEventListener("click", function (e) {
 
 timerMins.addEventListener("click", function (e) {
   console.log(`minutes: ${+e.target.textContent}`);
+  pauseTimer();
   // startTimer();
 });
 
@@ -132,8 +133,6 @@ function toggleTimer() {
   }
 }
 
-// updateTimer();
-
 // Change the tab title to show timer
 function changeTabTitle(mins, secs, state) {
   document.title = `🍅 ${state}: ${mins}:${secs} `;
@@ -141,8 +140,16 @@ function changeTabTitle(mins, secs, state) {
 
 // Reset timer variables
 function resetTimer() {
+  clearInterval(timerId);
   elapsedTime = 0;
   pomodoros = 0;
+}
+
+function pauseTimer() {
+  if (timerRunning) {
+    clearInterval(timerId);
+    timerRunning = false;
+  }
 }
 
 function startTimer() {
@@ -159,3 +166,8 @@ function startTimer() {
 // #F04C4A
 // #F177A8
 // #26BDEF
+
+// TODO
+// RESTART TIMER ONCE PAUSED
+// STOP TIMER AND RESET VARIABLES ONCE PAUSED
+// CHANGE BACKGROUND DURING DIFFERENT STATES
