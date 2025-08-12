@@ -36,7 +36,8 @@ longBreakTimeInput.addEventListener("change", function (e) {
 
 timerSecs.addEventListener("click", function (e) {
   console.log(`seconds: ${+e.target.textContent}`);
-  // startTimer();
+  // clearInterval();
+  startTimer();
 });
 
 timerMins.addEventListener("click", function (e) {
@@ -145,10 +146,10 @@ function resetTimer() {
 }
 
 function startTimer() {
-  console.log(timerRunning);
-  setInterval(updateTimer, 1000);
-  toggleTimer();
-  console.log(timerRunning);
+  if (!timerRunning) {
+    timerId = setInterval(updateTimer, 1000);
+    timerRunning = true;
+  }
 }
 
 // for each pomodoro completed add a tomato on the screen
