@@ -52,6 +52,11 @@ console.log(longBreakTime.textContent);
 changeTimers.addEventListener("click", function () {
   timerMins.textContent = +focusTimeInput.value;
   focusTime.textContent = +focusTimeInput.value;
+  console.log("pomodoro time changed!");
+  shortBreakTime.textContent = +shortBreakTimeInput.value;
+  console.log("short time changed");
+  longBreakTime.textContent = +longBreakTimeInput.value;
+  console.log("long break time changed");
 });
 
 // <input  type="number" id="focus-input" placeholder="25">pomodoro: <span id="pomodoro-time">25</span></input><br>
@@ -60,11 +65,42 @@ changeTimers.addEventListener("click", function () {
 
 let now = performance.now();
 let elapsedTime = 0;
-let startTime = 0;
+let startTime = +timerMins.textContent;
 
 console.log(now);
 
 // Math.floor();
 // Timer checks time -> checks elapsed time since previous check -> updates timer
 
-let time = startTime * 60;
+// let time = startTime * 60;
+let time = 25 * 60;
+console.log(`start time: ${time}`);
+
+setInterval(updateTimer, 1000);
+
+function updateTimer() {
+  const mins = Math.floor(time / 60);
+  let secs = time % 60;
+  console.log(time);
+  // secs = secs < 10 ? "0" + secs : secs;
+
+  console.log(`mins: ${mins} : secs: ${secs}`);
+
+  // if (timerSecs.textContent === 0) {
+  //   secs = "0" + "secs";
+  //   timerSecs.textContent = "00";
+  // } else {
+  //   timerSecs.textContent = secs;
+  // }
+
+  timerMins.textContent = +mins;
+  if (secs <= 9) {
+    timerSecs.textContent = "0" + +secs;
+  } else {
+    timerSecs.textContent = +secs;
+  }
+
+  time--;
+}
+
+updateTimer(time);
