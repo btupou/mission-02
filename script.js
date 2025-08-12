@@ -4,7 +4,7 @@ console.log("Mission 2 Connected! 👀");
 const focusTime = document.getElementById("pomodoro-time");
 const shortBreakTime = document.getElementById("short-break-time");
 const longBreakTime = document.getElementById("long-break-time");
-const isRunning = false;
+let timerRunning = false;
 
 const focusTimeInput = document.getElementById("focus-input");
 const shortBreakTimeInput = document.getElementById("short-break-input");
@@ -36,10 +36,12 @@ longBreakTimeInput.addEventListener("change", function (e) {
 
 timerSecs.addEventListener("click", function (e) {
   console.log(`seconds: ${+e.target.textContent}`);
+  // startTimer();
 });
 
 timerMins.addEventListener("click", function (e) {
   console.log(`minutes: ${+e.target.textContent}`);
+  // startTimer();
 });
 
 console.log(focusTime.textContent);
@@ -50,57 +52,109 @@ console.log(longBreakTime.textContent);
 
 // change time
 changeTimers.addEventListener("click", function () {
-  timerMins.textContent = +focusTimeInput.value;
-  focusTime.textContent = +focusTimeInput.value;
-  console.log("pomodoro time changed!");
-  shortBreakTime.textContent = +shortBreakTimeInput.value;
-  console.log("short time changed");
-  longBreakTime.textContent = +longBreakTimeInput.value;
-  console.log("long break time changed");
+  if (timerRunning != true) {
+    timerMins.textContent = +focusTimeInput.value;
+    focusTime.textContent = +focusTimeInput.value;
+    console.log("pomodoro time changed!");
+    shortBreakTime.textContent = +shortBreakTimeInput.value;
+    console.log("short time changed");
+    longBreakTime.textContent = +longBreakTimeInput.value;
+    console.log("long break time changed");
+  } else {
+    alert("Timer is running!");
+  }
 });
 
-// <input  type="number" id="focus-input" placeholder="25">pomodoro: <span id="pomodoro-time">25</span></input><br>
-// <input number="number" id="short-break-input" placeholder="5">short break: <span id="short-break-time">5</span></input><br>
-// <input inputer="number" id="long-break-input" placeholder="15">long break: <span id="long-break-time">15</span></input>
-
-let now = performance.now();
 let elapsedTime = 0;
 let startTime = +timerMins.textContent;
-
-console.log(now);
-
-// Math.floor();
-// Timer checks time -> checks elapsed time since previous check -> updates timer
+const timerStates = [
+  "Focusing",
+  "Short Rest",
+  "Focusing",
+  "Short Rest",
+  "Focusing",
+  "Short Rest",
+  "Focusing",
+  "Long Break",
+];
+const defaultTimes = [25, 5, 15];
+let state = timerStates[0];
+let pomodoros = 0;
 
 // let time = startTime * 60;
-let time = 25 * 60;
+let time = startTime * 60;
 console.log(`start time: ${time}`);
 
-setInterval(updateTimer, 1000);
+// console.log(timerRunning);
+// setInterval(updateTimer, 1000);
+// toggleTimer();
+// console.log(timerRunning);
 
 function updateTimer() {
   const mins = Math.floor(time / 60);
   let secs = time % 60;
-  console.log(time);
-  // secs = secs < 10 ? "0" + secs : secs;
 
   console.log(`mins: ${mins} : secs: ${secs}`);
 
-  // if (timerSecs.textContent === 0) {
-  //   secs = "0" + "secs";
-  //   timerSecs.textContent = "00";
-  // } else {
-  //   timerSecs.textContent = secs;
-  // }
-
+  // check if secs is 0? make it 00!
   timerMins.textContent = +mins;
   if (secs <= 9) {
     timerSecs.textContent = "0" + +secs;
+    secs = timerSecs.textContent;
   } else {
     timerSecs.textContent = +secs;
+    secs = timerSecs.textContent;
   }
 
+  // decerement timer i.e 1500 -> 1499
   time--;
+  elapsedTime++;
+  console.log(`time left: ${+time} | time elapsed: ${+elapsedTime}`);
+  changeTabTitle(mins, secs, state);
 }
 
-updateTimer(time);
+function changeStates() {
+  if (timerStates[pomodoros + 1] === "Long Break") {
+  } else {
+    pomodoros++;
+    state = timerStates[pomodoros];
+  }
+}
+
+function toggleTimer() {
+  if (timerRunning) {
+    timerRunning = false;
+    elapsedTime = 0;
+  } else {
+    timerRunning = true;
+    elapsedTime = 0;
+  }
+}
+
+// updateTimer();
+
+// Change the tab title to show timer
+function changeTabTitle(mins, secs, state) {
+  document.title = `🍅 ${state}: ${mins}:${secs} `;
+}
+
+// Reset timer variables
+function resetTimer() {
+  elapsedTime = 0;
+  pomodoros = 0;
+}
+
+function startTimer() {
+  console.log(timerRunning);
+  setInterval(updateTimer, 1000);
+  toggleTimer();
+  console.log(timerRunning);
+}
+
+// for each pomodoro completed add a tomato on the screen
+// 🍅
+// #FECC59
+// #3BA76B
+// #F04C4A
+// #F177A8
+// #26BDEF
