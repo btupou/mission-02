@@ -87,11 +87,6 @@ let pomodoros = 0;
 let time = startTime * 60;
 console.log(`start time: ${time}`);
 
-// console.log(timerRunning);
-// setInterval(updateTimer, 1000);
-// toggleTimer();
-// console.log(timerRunning);
-
 function updateTimer() {
   const mins = Math.floor(time / 60);
   let secs = time % 60;
@@ -159,6 +154,11 @@ function startTimer() {
   }
 }
 
+// TODO
+// RESTART TIMER ONCE PAUSED
+// STOP TIMER AND RESET VARIABLES ONCE PAUSED
+// CHANGE BACKGROUND DURING DIFFERENT STATES
+
 // for each pomodoro completed add a tomato on the screen
 // 🍅
 // #FECC59
@@ -166,8 +166,3 @@ function startTimer() {
 // #F04C4A
 // #F177A8
 // #26BDEF
-
-// TODO
-// RESTART TIMER ONCE PAUSED
-// STOP TIMER AND RESET VARIABLES ONCE PAUSED
-// CHANGE BACKGROUND DURING DIFFERENT STATES

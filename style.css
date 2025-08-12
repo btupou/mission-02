@@ -7,15 +7,28 @@
   background-color: #fecc59;
 }
 
+html,
+body {
+  height: 100%; /* make page fill viewport */
+  margin: 0; /* remove default margin */
+  display: flex; /* enable flexbox */
+  flex-direction: column; /* stack nav and timer vertically */
+}
+
 .timer {
-  flex-direction: column;
+  flex: 1;
+  display: flex;
+  flex-direction: row;
   align-items: center;
-  text-align: center;
+  /* text-align: center; */
   justify-content: center;
   font-family: "Bagel Fat One", system-ui;
   font-size: 300px;
+  /* padding-top: 40px; */
+  padding-bottom: 40px;
   cursor: pointer;
   cursor: hand;
+  box-sizing: border-box;
 }
 
 .nav {
@@ -48,7 +61,6 @@
     text-align: center;
     justify-content: center;
   }
-
   .timer {
     flex-direction: column;
     align-items: center;
